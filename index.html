@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>Orçamento Estético Premium — Richélen Flach</title>
+<style>
+:root{
+  --vinho:#3b000d;
+  --vinho2:#5c071a;
+  --vinho3:#7a2030;
+  --creme:#fbf1e8;
+  --creme2:#fffaf6;
+  --ouro:#c99663;
+  --linha:#dcc0a8;
+  --texto:#301317;
+  --muted:#85645b;
+  --verde:#286d43;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  background:#ead8cc;
+  color:var(--texto);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+body{padding:16px}
+button,input,textarea{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  font-size:16px;
+}
+.app{
+  width:100%;
+  max-width:1180px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:380px minmax(0,1fr);
+  gap:18px;
+  align-items:start;
+}
+.panel{
+  background:linear-gradient(180deg,#5a0618,#2b0008);
+  color:white;
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 20px 48px rgba(48,0,12,.28);
+}
+.brand-panel{
+  text-align:center;
+  font-family:Georgia,"Times New Roman",serif;
+  color:#ffe4c8;
+  font-size:34px;
+  font-weight:700;
+  letter-spacing:.03em;
+}
+.brand-sub{
+  text-align:center;
+  color:#d9b18f;
+  text-transform:uppercase;
+  font-size:10px;
+  letter-spacing:.28em;
+  margin:7px 0 18px;
+}
+.group{
+  border-top:1px solid rgba(255,232,210,.18);
+  padding-top:16px;
+  margin-top:16px;
+}
+.group h3{
+  margin:0 0 12px;
+  color:#ffd8b8;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  font-size:11px;
+}
+.field{margin-bottom:12px}
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+label{
+  display:block;
+  margin-bottom:6px;
+  color:#f0cbbb;
+  font-size:13px;
+}
+input,textarea{
+  width:100%;
+  display:block;
+  border:1px solid rgba(255,232,210,.22);
+  background:#641326;
+  color:white;
+  border-radius:14px;
+  padding:13px 12px;
+  outline:none;
+  -webkit-appearance:none;
+  appearance:none;
+}
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+input:focus,textarea:focus{
+  border-color:#f2bf8d;
+  background:#74172c;
+}
+.help{
+  color:#f2d6c4;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,232,210,.14);
+  border-radius:14px;
+  padding:12px;
+  font-size:12px;
+  line-height:1.45;
+}
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+}
+button{
+  min-height:50px;
+  border:0;
+  border-radius:14px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.btn-primary{
+  background:linear-gradient(180deg,#ffd7ae,#c78d5c);
+  color:#33000b;
+}
+.btn-secondary{
+  background:#4a0715;
+  color:#ffe5ce;
+  border:1px solid rgba(255,232,210,.25);
+}
+.status{
+  min-height:22px;
+  margin-top:12px;
+  color:#ffd8b8;
+  font-size:12px;
+  text-align:center;
+}
+.paper-wrap{
+  min-width:0;
+}
+.paper{
+  background:var(--creme);
+  box-shadow:0 24px 58px rgba(60,25,16,.24);
+  overflow:hidden;
+}
+.header{
+  background:linear-gradient(135deg,#290006,#630f20);
+  color:#ffe2c7;
+  text-align:center;
+  padding:28px 30px 23px;
+  border-bottom:1px solid var(--ouro);
+}
+.header .brand{
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:40px;
+  font-weight:700;
+  letter-spacing:.05em;
+}
+.header .caption{
+  margin-top:7px;
+  color:#d9b18f;
+  text-transform:uppercase;
+  letter-spacing:.32em;
+  font-size:9px;
+}
+.content{
+  padding:34px 52px 22px;
+}
+.title{
+  text-align:center;
+  border-top:1px solid var(--ouro);
+  border-bottom:1px solid var(--ouro);
+  padding:13px 0 15px;
+  margin-bottom:22px;
+}
+.title small{
+  display:block;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.32em;
+  font-size:9px;
+}
+.title h1{
+  margin:5px 0 0;
+  color:var(--vinho);
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:40px;
+  font-weight:400;
+}
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.info-card{
+  border:1px solid var(--linha);
+  background:rgba(255,255,255,.48);
+  padding:14px 15px;
+}
+.info-card span{
+  display:block;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.26em;
+  font-size:8px;
+  margin-bottom:7px;
+}
+.info-card b{
+  font-size:15px;
+}
+.meta{
+  display:flex;
+  justify-content:flex-end;
+  gap:22px;
+  margin:14px 0 22px;
+  font-size:10px;
+}
+.meta span{
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:8px;
+  margin-right:5px;
+}
+.block-title{
+  margin:20px 0 10px;
+  color:var(--vinho2);
+  text-transform:uppercase;
+  letter-spacing:.34em;
+  font-weight:800;
+  font-size:9px;
+}
+.protocol{
+  border-top:1px solid var(--linha);
+  border-bottom:1px solid var(--linha);
+  padding:13px 0;
+  color:#735048;
+  font-family:Georgia,"Times New Roman",serif;
+  font-style:italic;
+  font-size:16px;
+  line-height:1.4;
+}
+.pay-card{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:14px;
+  align-items:center;
+  border:1px solid var(--linha);
+  background:rgba(255,255,255,.50);
+  padding:15px 16px;
+  margin-bottom:12px;
+}
+.pay-card.main{
+  background:#650719;
+  border-color:var(--ouro);
+  color:white;
+}
+.pay-title{
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.28em;
+  font-size:9px;
+  font-weight:800;
+  margin-bottom:6px;
+}
+.main .pay-title{color:#f1caaa}
+.pay-desc{
+  color:#76564d;
+  font-size:11px;
+  line-height:1.45;
+}
+.main .pay-desc{color:#f5d8c0}
+.pay-value{
+  text-align:right;
+  white-space:nowrap;
+}
+.pay-value strong{
+  display:block;
+  color:var(--vinho);
+  font-size:25px;
+}
+.main .pay-value strong{color:#ffe2c7}
+.pay-value small{
+  color:#85645b;
+  font-size:11px;
+}
+.main .pay-value small{color:#f0caaa}
+.economy{
+  margin-top:7px;
+  color:var(--verde);
+  font-size:11px;
+  font-weight:800;
+}
+.notes{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:18px;
+}
+.note{
+  border:1px solid var(--linha);
+  background:#fffaf5;
+  padding:13px;
+  color:#715149;
+  font-size:11px;
+  line-height:1.45;
+}
+.internal{
+  margin-top:18px;
+  border:1px dashed rgba(98,15,32,.34);
+  background:rgba(255,255,255,.42);
+  padding:14px;
+}
+.internal h3{
+  margin:0 0 10px;
+  color:var(--vinho2);
+  text-transform:uppercase;
+  letter-spacing:.28em;
+  font-size:10px;
+}
+.internal-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+.internal-item{
+  border:1px solid var(--linha);
+  background:#fffaf5;
+  padding:9px;
+}
+.internal-item span{
+  display:block;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  font-size:8px;
+  margin-bottom:5px;
+}
+.internal-item b{font-size:12px}
+.footer{
+  background:#350009;
+  color:#f5dec9;
+  border-top:1px solid var(--ouro);
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:16px;
+  padding:18px 52px;
+}
+.footer strong{
+  display:block;
+  color:#d9a16c;
+  text-transform:uppercase;
+  letter-spacing:.26em;
+  font-size:8px;
+  margin-bottom:6px;
+}
+.footer span{
+  font-size:10px;
+  line-height:1.4;
+}
+@media (min-width: 768px) and (max-width: 1180px){
+  body{padding:14px}
+  .app{
+    grid-template-columns:360px minmax(0,1fr);
+    gap:14px;
+  }
+  .content{padding:28px 34px 18px}
+  .title h1{font-size:35px}
+  .header .brand{font-size:36px}
+  .pay-value strong{font-size:22px}
+  .paper{min-height:0}
+}
+@media (orientation: portrait) and (max-width: 900px){
+  .app{
+    grid-template-columns:1fr;
+    max-width:760px;
+  }
+  .panel{position:relative}
+}
+@media(max-width:720px){
+  body{padding:10px}
+  .app{grid-template-columns:1fr}
+  .panel{border-radius:18px;padding:16px}
+  .grid2,.info-grid,.notes,.internal-grid,.footer{grid-template-columns:1fr}
+  .content{padding:22px 16px 16px}
+  .title h1{font-size:32px}
+  .header{padding:23px 16px 19px}
+  .header .brand{font-size:34px}
+  .pay-card{grid-template-columns:1fr}
+  .pay-value{text-align:left}
+}
+@media print{
+  @page{size:A4;margin:0}
+  html,body{
+    width:210mm;
+    height:297mm;
+    margin:0;
+    padding:0;
+    background:#fff;
+    overflow:hidden;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .panel{display:none!important}
+  .app{
+    display:block;
+    width:210mm;
+    height:297mm;
+    max-width:none;
+    margin:0;
+  }
+  .paper-wrap,.paper{
+    width:210mm;
+    height:297mm;
+    margin:0;
+    box-shadow:none;
+    overflow:hidden;
+  }
+  .header{padding:20px 30px 16px}
+  .header .brand{font-size:36px}
+  .content{padding:24px 48px 8px}
+  .title{padding:9px 0 11px;margin-bottom:12px}
+  .title h1{font-size:34px}
+  .info-card{padding:10px 12px}
+  .meta{margin:9px 0 13px}
+  .block-title{margin:13px 0 7px}
+  .protocol{font-size:13px;padding:8px 0}
+  .pay-card{padding:10px 13px;margin-bottom:8px}
+  .pay-value strong{font-size:20px}
+  .notes{margin-top:8px;gap:9px}
+  .note{padding:8px;font-size:9px}
+  .internal{display:none!important}
+  .footer{
+    padding:10px 48px;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <div class="brand-panel">Richélen Flach</div>
+    <div class="brand-sub">Orçamento Premium</div>
+
+    <section class="group">
+      <h3>Dados do orçamento</h3>
+
+      <div class="field">
+        <label for="cliente">Nome da cliente</label>
+        <input id="cliente" type="text" value="" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="procedimento">Procedimento principal</label>
+        <input id="procedimento" type="text" value="" autocomplete="off">
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="data">Data</label>
+          <input id="data" type="text" value="" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="validade">Validade</label>
+          <input id="validade" type="text" value="" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="obs">Observação elegante</label>
+        <textarea id="obs"></textarea>
+      </div>
+    </section>
+
+    <section class="group">
+      <h3>Precificação interna</h3>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="custo">Custo do procedimento</label>
+          <input id="custo" type="text" inputmode="decimal" value="" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="lucro">Lucro desejado</label>
+          <input id="lucro" type="text" inputmode="decimal" value="" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="encargoCartao">Encargo cartão ao mês (%)</label>
+          <input id="encargoCartao" type="text" inputmode="decimal" value="" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="parcelas">Parcelas cartão</label>
+          <input id="parcelas" type="text" inputmode="numeric" value="" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="custoPix">Custo tributário Pix (%)</label>
+          <input id="custoPix" type="text" inputmode="decimal" value="" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="dinheiroManual">Dinheiro à vista</label>
+          <input id="dinheiroManual" type="text" value="automático" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="help">
+        Altere os campos e os valores atualizam automaticamente. Cartão e Pix protegem o líquido usando: valor ÷ (1 - percentual de custo).
+      </div>
+    </section>
+
+    <div class="actions">
+      <button id="btnPdf" class="btn-primary" type="button">Salvar PDF</button>
+      <button id="btnWhatsApp" class="btn-secondary" type="button">WhatsApp</button>
+      <button id="btnAtualizar" class="btn-secondary" type="button">Atualizar</button>
+      <button id="btnLimpar" class="btn-secondary" type="button">Limpar</button>
+    </div>
+
+    <div id="status" class="status">Pronto para preencher.</div>
+  </aside>
+
+  <main class="paper-wrap">
+    <section class="paper" id="paper">
+      <header class="header">
+        <div class="brand">Richélen Flach</div>
+        <div class="caption">Orçamento estético premium</div>
+      </header>
+
+      <div class="content">
+        <div class="title">
+          <small>Richélen Flach</small>
+          <h1>Orçamento Estético Premium</h1>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card">
+            <span>Cliente</span>
+            <b id="outCliente">—</b>
+          </div>
+          <div class="info-card">
+            <span>Procedimento principal</span>
+            <b id="outProcedimento">—</b>
+          </div>
+        </div>
+
+        <div class="meta">
+          <div><span>Data</span><b id="outData">—</b></div>
+          <div><span>Validade</span><b id="outValidade">—</b></div>
+        </div>
+
+        <div class="block-title">Apresentação do protocolo</div>
+        <div class="protocol" id="outObs">Preencha os dados do orçamento para gerar a apresentação do protocolo.</div>
+
+        <div class="block-title">Condições de investimento</div>
+
+        <div class="pay-card main">
+          <div>
+            <div class="pay-title">Cartão de crédito</div>
+            <div class="pay-desc">Investimento total em até <b id="outParcelasTexto">—</b>, mantendo a condição facilitada no cartão.</div>
+          </div>
+          <div class="pay-value">
+            <strong id="outCartao">R$ 0,00</strong>
+            <small id="outParcela">—</small>
+          </div>
+        </div>
+
+        <div class="pay-card">
+          <div>
+            <div class="pay-title">Pix à vista</div>
+            <div class="pay-desc">
+              Condição especial para pagamento à vista via Pix.
+              <div class="economy" id="outEconomiaPix">Economia de R$ 0,00 • desconto equivalente de 0,00%</div>
+            </div>
+          </div>
+          <div class="pay-value">
+            <strong id="outPix">R$ 0,00</strong>
+            <small>à vista no Pix</small>
+          </div>
+        </div>
+
+        <div class="pay-card">
+          <div>
+            <div class="pay-title">Dinheiro à vista</div>
+            <div class="pay-desc">
+              Melhor condição para pagamento à vista em dinheiro.
+              <div class="economy" id="outEconomiaDinheiro">Economia de R$ 0,00 • desconto equivalente de 0,00%</div>
+            </div>
+          </div>
+          <div class="pay-value">
+            <strong id="outDinheiro">R$ 0,00</strong>
+            <small>à vista em dinheiro</small>
+          </div>
+        </div>
+
+        <div class="notes">
+          <div class="note"><strong>Validade:</strong> os valores e condições são válidos pelo prazo informado neste orçamento.</div>
+          <div class="note"><strong>Importante:</strong> o protocolo poderá ser ajustado após avaliação profissional, se necessário.</div>
+        </div>
+
+        <div class="internal">
+          <h3>Conferência interna — não aparece no PDF</h3>
+          <div class="internal-grid">
+            <div class="internal-item"><span>Mínimo líquido</span><b id="intMinimo">R$ 0,00</b></div>
+            <div class="internal-item"><span>Encargo cartão total</span><b id="intCartao">0,00%</b></div>
+            <div class="internal-item"><span>Custo Pix</span><b id="intPix">0,00%</b></div>
+            <div class="internal-item"><span>Lucro sobre custo</span><b id="intLucroPct">0,00%</b></div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div><strong>Atendimento</strong><span>Orçamento personalizado para procedimento estético.</span></div>
+        <div><strong>Condições</strong><span>Cartão, Pix ou dinheiro conforme opções apresentadas.</span></div>
+        <div><strong>Richélen Flach</strong><span>Biomedicina estética • cuidado, técnica e sofisticação.</span></div>
+      </footer>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  var timer = null;
+
+  function byId(id){
+    return document.getElementById(id);
+  }
+
+  function text(id,value){
+    var node = byId(id);
+    if(node){ node.textContent = value; }
+  }
+
+  function status(msg){
+    var node = byId("status");
+    if(node){ node.textContent = msg; }
+  }
+
+  function parseBR(value){
+    if(value === null || value === undefined){ return 0; }
+    var raw = String(value).trim();
+    if(raw === ""){ return 0; }
+    if(raw.toLowerCase().indexOf("auto") !== -1){ return NaN; }
+
+    raw = raw.replace(/\s/g,"");
+    raw = raw.replace(/R\$/gi,"");
+
+    if(raw.indexOf(",") !== -1){
+      raw = raw.replace(/\./g,"");
+      raw = raw.replace(",",".");
+    }else{
+      var partes = raw.split(".");
+      if(partes.length === 2){
+        var decimais = partes[1].length;
+        if(decimais === 3){
+          raw = partes[0] + partes[1];
+        }
+      }else if(partes.length > 2){
+        raw = raw.replace(/\./g,"");
+      }
+    }
+
+    var number = Number(raw);
+    if(isNaN(number)){ return 0; }
+    return number;
+  }
+
+  function money(value){
+    value = Number(value) || 0;
+    return value.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+  }
+
+  function pct(value){
+    value = Number(value) || 0;
+    return value.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2}) + "%";
+  }
+
+  function recalcular(){
+    var cliente = byId("cliente").value || "—";
+    var procedimento = byId("procedimento").value || "—";
+    var data = byId("data").value || "";
+    var validade = byId("validade").value || "";
+    var obs = byId("obs").value || "Preencha os dados do orçamento para gerar a apresentação do protocolo.";
+
+    var custo = parseBR(byId("custo").value);
+    var lucro = parseBR(byId("lucro").value);
+    var encargoMes = parseBR(byId("encargoCartao").value);
+    var parcelasInformadas = parseBR(byId("parcelas").value);
+    var parcelas = Math.max(1, Math.round(parcelasInformadas || 1));
+    var custoPix = parseBR(byId("custoPix").value);
+
+    var minimo = custo + lucro;
+
+    var encargoTotal = encargoMes * parcelas;
+    var fatorCartao = 1 - (encargoTotal / 100);
+    var cartao = fatorCartao > 0 ? minimo / fatorCartao : minimo;
+    var parcela = cartao / parcelas;
+
+    var fatorPix = 1 - (custoPix / 100);
+    var pix = fatorPix > 0 ? minimo / fatorPix : minimo;
+
+    var dinheiroManual = parseBR(byId("dinheiroManual").value);
+    var dinheiro = isNaN(dinheiroManual) ? minimo : Math.max(dinheiroManual, minimo);
+
+    var economiaPix = cartao - pix;
+    var descontoPix = cartao > 0 ? economiaPix / cartao * 100 : 0;
+
+    var economiaDinheiro = cartao - dinheiro;
+    var descontoDinheiro = cartao > 0 ? economiaDinheiro / cartao * 100 : 0;
+
+    var lucroPct = custo > 0 ? lucro / custo * 100 : 0;
+
+    text("outCliente", cliente);
+    text("outProcedimento", procedimento);
+    text("outData", data);
+    text("outValidade", validade);
+    text("outObs", obs);
+    text("outParcelasTexto", minimo > 0 ? (parcelas + "x sem juros") : "—");
+    text("outCartao", money(cartao));
+    text("outParcela", minimo > 0 ? (parcelas + "x de " + money(parcela)) : "—");
+    text("outPix", money(pix));
+    text("outDinheiro", money(dinheiro));
+    text("outEconomiaPix", "Economia de " + money(economiaPix) + " • desconto equivalente de " + pct(descontoPix));
+    text("outEconomiaDinheiro", "Economia de " + money(economiaDinheiro) + " • desconto equivalente de " + pct(descontoDinheiro));
+    text("intMinimo", money(minimo));
+    text("intCartao", pct(encargoTotal));
+    text("intPix", pct(custoPix));
+    text("intLucroPct", pct(lucroPct));
+
+    status("Valores atualizados.");
+    clearTimeout(timer);
+    timer = setTimeout(function(){ status("Pronto para preencher."); }, 900);
+  }
+
+  function limpar(){
+    if(!confirm("Deseja limpar os campos e começar um novo orçamento?")){ return; }
+    byId("cliente").value = "";
+    byId("procedimento").value = "";
+    byId("data").value = "";
+    byId("validade").value = "";
+    byId("obs").value = "";
+    byId("custo").value = "";
+    byId("lucro").value = "";
+    byId("encargoCartao").value = "";
+    byId("parcelas").value = "";
+    byId("custoPix").value = "";
+    byId("dinheiroManual").value = "automático";
+    recalcular();
+  }
+
+  function salvarPDF(){
+    recalcular();
+    status("Abrindo impressão/PDF...");
+    setTimeout(function(){ window.print(); }, 120);
+  }
+
+  function whatsapp(){
+    recalcular();
+    var mensagem =
+      "Olá, " + byId("outCliente").textContent + "! Tudo bem?\n\n" +
+      "Preparei seu orçamento estético premium para:\n" +
+      byId("outProcedimento").textContent + "\n\n" +
+      "Condições de investimento:\n\n" +
+      "Cartão:\n" +
+      byId("outCartao").textContent + "\n" +
+      byId("outParcela").textContent + " sem juros\n\n" +
+      "Pix à vista:\n" +
+      byId("outPix").textContent + "\n" +
+      byId("outEconomiaPix").textContent + "\n\n" +
+      "Dinheiro à vista:\n" +
+      byId("outDinheiro").textContent + "\n" +
+      byId("outEconomiaDinheiro").textContent + "\n\n" +
+      "Este orçamento é válido por " + byId("outValidade").textContent + ".\n\n" +
+      "Fico à disposição para alinharmos o melhor formato para você.";
+
+    status("Abrindo WhatsApp...");
+    window.location.href = "https://wa.me/?text=" + encodeURIComponent(mensagem);
+  }
+
+  function addButton(id, fn){
+    var node = byId(id);
+    if(!node){ return; }
+    node.onclick = function(e){
+      if(e){ e.preventDefault(); }
+      fn();
+      return false;
+    };
+  }
+
+  function bindFields(){
+    var fields = document.querySelectorAll("input, textarea");
+    for(var i=0;i<fields.length;i++){
+      fields[i].oninput = recalcular;
+      fields[i].onchange = recalcular;
+      fields[i].onkeyup = recalcular;
+      fields[i].onblur = recalcular;
+    }
+  }
+
+  function start(){
+    bindFields();
+    addButton("btnPdf", salvarPDF);
+    addButton("btnWhatsApp", whatsapp);
+    addButton("btnAtualizar", recalcular);
+    addButton("btnLimpar", limpar);
+    recalcular();
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", start);
+  }else{
+    start();
+  }
+})();
+</script>
+</body>
+</html>
