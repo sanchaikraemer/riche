@@ -543,19 +543,22 @@ button{
   .header-brand-row{
     width:100%!important;
     display:flex!important;
+    flex-direction:column!important;
     align-items:center!important;
     justify-content:center!important;
-    gap:10mm!important;
+    gap:1.5mm!important;
   }
 
   .logo-img-main{
-    max-width:56mm!important;
-    max-height:14mm!important;
+    max-width:52mm!important;
+    max-height:12mm!important;
+    margin:0 auto!important;
   }
 
   .header .caption{
-    font-size:7.2pt!important;
-    letter-spacing:2.2pt!important;
+    font-size:6.8pt!important;
+    letter-spacing:2pt!important;
+    text-align:center!important;
     white-space:nowrap!important;
   }
 
@@ -606,6 +609,8 @@ button{
   }
 
   .pay-card{
+    grid-template-columns:1fr auto!important;
+    align-items:center!important;
     padding:4mm 5mm!important;
     margin-bottom:3.2mm!important;
     gap:4mm!important;
@@ -619,6 +624,11 @@ button{
   .pay-desc{
     font-size:8pt!important;
     line-height:1.25!important;
+  }
+
+  .pay-value{
+    text-align:right!important;
+    white-space:nowrap!important;
   }
 
   .pay-value strong{
