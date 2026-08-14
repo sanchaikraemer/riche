@@ -844,6 +844,101 @@ input[type="time"]{
   line-height:1.2;
 }
 
+/* Campo de horário com seletor próprio (no lugar do relógio do sistema) */
+.time-field{
+  min-height:48px;
+  text-align:center;
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:.06em;
+  cursor:pointer;
+  caret-color:transparent;
+}
+.time-field:focus{outline:none}
+
+.tp-display{
+  text-align:center;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:44px;
+  font-weight:700;
+  color:#ffe4c8;
+  letter-spacing:.04em;
+  margin:2px 0 16px;
+}
+.tp-cols{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.tp-col h5{
+  margin:0 0 8px;
+  text-align:center;
+  color:#d9a16c;
+  text-transform:uppercase;
+  letter-spacing:.22em;
+  font-size:9px;
+  font-weight:800;
+}
+.tp-scroll{
+  position:relative;
+  max-height:44vh;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  display:grid;
+  gap:6px;
+  padding:2px;
+  border:1px solid rgba(255,232,210,.16);
+  border-radius:14px;
+  background:rgba(255,255,255,.05);
+}
+.tp-opt{
+  min-height:42px;
+  border-radius:10px;
+  background:rgba(255,255,255,.05);
+  color:#ffe5ce;
+  border:1px solid transparent;
+  font-size:16px;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:none;
+  padding:0;
+}
+.tp-opt.is-on{
+  background:linear-gradient(180deg,#ffd7ae,#c78d5c);
+  color:#33000b;
+  font-weight:800;
+}
+.tp-rapidos{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  justify-content:center;
+  margin:0 0 14px;
+}
+.tp-rapido{
+  min-height:36px;
+  padding:0 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  color:#ffe5ce;
+  border:1px solid rgba(255,232,210,.22);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:none;
+}
+.tp-rapido.is-on{
+  background:linear-gradient(180deg,#ffd7ae,#c78d5c);
+  color:#33000b;
+  border-color:transparent;
+}
+.tp-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+}
+
 .tabs{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -932,6 +1027,31 @@ input[type="time"]{
   color:#33000b;
   font-weight:800;
 }
+.cal-nav sup{
+  font-size:9px;
+  font-weight:800;
+  vertical-align:super;
+  margin-left:1px;
+  background:linear-gradient(180deg,#ffd7ae,#c78d5c);
+  color:#33000b;
+  border-radius:999px;
+  padding:1px 5px;
+}
+.datas-resumo{
+  color:#ffe6cf;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,232,210,.18);
+  border-radius:12px;
+  padding:9px 10px;
+  font-size:11.5px;
+  line-height:1.45;
+  text-align:center;
+}
+.datas-resumo.tem-outros{
+  border-color:var(--ouro);
+  background:rgba(201,150,99,.16);
+}
+.datas-resumo b{color:#fff}
 .cal-legend{
   margin-top:8px;
   color:#f2d6c4;
@@ -964,6 +1084,7 @@ input[type="time"]{
   margin-bottom:2px;
 }
 .date-card small{color:#e9c3ab;font-size:10.5px}
+.date-card .time-field,
 .date-card input[type="time"]{
   padding:8px 6px;
   min-height:38px;
@@ -1340,7 +1461,7 @@ input[type="time"]{
         <div class="grid2">
           <div class="field">
             <label for="agHoraPadrao">Horário padrão</label>
-            <input id="agHoraPadrao" type="time" value="14:00">
+            <input id="agHoraPadrao" class="time-field" type="text" value="14:00" readonly inputmode="none" autocomplete="off">
           </div>
           <div class="field">
             <label for="agDuracao">Duração (min)</label>
@@ -1549,6 +1670,31 @@ input[type="time"]{
     <div class="sheet-note" id="instalarNota"></div>
 
     <button id="btnFecharInstalar" class="btn-primary" type="button" style="margin-top:16px;width:100%;">Entendi</button>
+  </div>
+</div>
+
+<div class="sheet" id="folhaHorario" hidden>
+  <div class="sheet-card">
+    <h4>Escolher horário</h4>
+    <div class="tp-display" id="tpVisor">14:00</div>
+
+    <div class="tp-rapidos" id="tpRapidos"></div>
+
+    <div class="tp-cols">
+      <div class="tp-col">
+        <h5>Hora</h5>
+        <div class="tp-scroll" id="tpHoras"></div>
+      </div>
+      <div class="tp-col">
+        <h5>Minuto</h5>
+        <div class="tp-scroll" id="tpMinutos"></div>
+      </div>
+    </div>
+
+    <div class="tp-actions">
+      <button id="tpCancelar" class="btn-secondary" type="button">Cancelar</button>
+      <button id="tpConfirmar" class="btn-primary" type="button">Confirmar</button>
+    </div>
   </div>
 </div>
 
@@ -2027,6 +2173,50 @@ function recalcular(){
         alternarData(this.getAttribute("data-dia"));
       };
     }
+
+    // Avisa que existem datas marcadas fora do mês que está à vista
+    var mesAtual = ano + "-" + pad2(mes+1);
+    var lista = datasOrdenadas();
+    var antes = 0;
+    var depois = 0;
+    for(var i=0;i<lista.length;i++){
+      var mesDaData = lista[i].slice(0,7);
+      if(mesDaData < mesAtual){ antes++; }
+      else if(mesDaData > mesAtual){ depois++; }
+    }
+    var anterior = byId("calAnterior");
+    var proximo = byId("calProximo");
+    if(anterior){ anterior.innerHTML = "‹" + (antes ? "<sup>" + antes + "</sup>" : ""); }
+    if(proximo){ proximo.innerHTML = "›" + (depois ? "<sup>" + depois + "</sup>" : ""); }
+  }
+
+  function resumoPorMes(){
+    var lista = datasOrdenadas();
+    if(lista.length === 0){ return null; }
+
+    var ordem = [];
+    var contagem = {};
+    for(var i=0;i<lista.length;i++){
+      var chaveMes = lista[i].slice(0,7);
+      if(contagem[chaveMes] === undefined){
+        contagem[chaveMes] = 0;
+        ordem.push(chaveMes);
+      }
+      contagem[chaveMes]++;
+    }
+
+    var partes = [];
+    for(var m=0;m<ordem.length;m++){
+      var pedacos = ordem[m].split("-");
+      var nomeMes = MESES[Number(pedacos[1]) - 1];
+      partes.push("<b>" + contagem[ordem[m]] + "</b> em " + nomeMes);
+    }
+
+    return {
+      total: lista.length,
+      meses: ordem.length,
+      texto: partes.join(" • ")
+    };
   }
 
   function alternarData(chave){
@@ -2050,13 +2240,19 @@ function recalcular(){
       if(lista.length === 0){
         editor.innerHTML = '<div class="empty-hint">Nenhuma data marcada ainda.<br>Toque no calendário ou use a sugestão automática.</div>';
       }else{
-        var html = "";
+        var resumo = resumoPorMes();
+        var html = '<div class="datas-resumo' + (resumo.meses > 1 ? " tem-outros" : "") + '">' +
+          "<b>" + resumo.total + "</b> " + (resumo.total === 1 ? "sessão marcada" : "sessões marcadas") +
+          " — " + resumo.texto +
+          (resumo.meses > 1 ? "<br>Use as setas ‹ › do calendário para ver os outros meses." : "") +
+          "</div>";
+
         for(var i=0;i<lista.length;i++){
           var chave = lista[i];
           html += '<div class="date-card">' +
             '<div><strong>' + (i+1) + 'ª sessão</strong>' +
             '<small>' + escapeHtml(dataPorExtenso(chave)) + '</small></div>' +
-            '<input type="time" data-hora="' + chave + '" value="' + escapeHtml(horaDe(chave)) + '">' +
+            '<input type="text" class="time-field" data-hora="' + chave + '" value="' + escapeHtml(horaDe(chave)) + '" readonly inputmode="none" autocomplete="off">' +
             '<button type="button" class="btn-remove" data-remove-data="' + chave + '">Remover</button>' +
           '</div>';
         }
@@ -2065,12 +2261,15 @@ function recalcular(){
 
         var horas = editor.querySelectorAll("[data-hora]");
         for(var h=0;h<horas.length;h++){
-          horas[h].onchange = function(){
-            agendaDatas[this.getAttribute("data-hora")] = this.value || "14:00";
-            atualizarAgendaDoc();
-            gerarMensagem(false);
-            salvarEstado();
-          };
+          (function(campo){
+            ligarCampoHorario(campo, function(valor){
+              agendaDatas[campo.getAttribute("data-hora")] = valor;
+              atualizarAgendaDoc();
+              gerarMensagem(false);
+              salvarEstado();
+              status("Horário da sessão: " + valor + ".");
+            });
+          })(horas[h]);
         }
 
         var remover = editor.querySelectorAll("[data-remove-data]");
@@ -2124,6 +2323,17 @@ function recalcular(){
   }
 
   function sugerirDatas(){
+    var jaMarcadas = datasOrdenadas().length;
+    if(jaMarcadas > 0){
+      var aviso = jaMarcadas === 1
+        ? "Já existe 1 data marcada, e ela será substituída pelas datas sugeridas. Continuar?"
+        : "Já existem " + jaMarcadas + " datas marcadas, e elas serão substituídas pelas datas sugeridas. Continuar?";
+      if(!confirm(aviso)){
+        status("Sugestão cancelada — as datas marcadas continuam como estavam.");
+        return;
+      }
+    }
+
     var sessoes = Math.max(1, Math.min(24, Math.round(parseBR(byId("agSessoes").value) || 1)));
     var intervalo = Math.max(1, Math.round(parseBR(byId("agIntervalo").value) || 7));
     var evitar = byId("agEvitar").value;
@@ -2730,6 +2940,161 @@ function recalcular(){
   }
 
   /* =======================================================
+     SELETOR DE HORÁRIO PRÓPRIO
+     (substitui o relógio do sistema, que é pouco prático)
+     ======================================================= */
+
+  var TP_RAPIDOS = ["08:00","09:00","10:00","13:00","14:00","15:00","16:00","18:00"];
+  var tpHora = 14;
+  var tpMinuto = 0;
+  var tpAoConfirmar = null;
+
+  function tpFormatar(hora, minuto){
+    return pad2(hora) + ":" + pad2(minuto);
+  }
+
+  function tpLerValor(valor){
+    var partes = String(valor || "").split(":");
+    var h = Number(partes[0]);
+    var m = Number(partes[1]);
+    if(isNaN(h) || h < 0 || h > 23){ h = 14; }
+    if(isNaN(m) || m < 0 || m > 59){ m = 0; }
+    return [h, Math.round(m / 5) * 5 % 60];
+  }
+
+  function tpAtualizarVisor(){
+    var visor = byId("tpVisor");
+    if(visor){ visor.textContent = tpFormatar(tpHora, tpMinuto); }
+
+    var atual = tpFormatar(tpHora, tpMinuto);
+    var marcar = function(container, atributo, valor){
+      if(!container){ return; }
+      var opcoes = container.querySelectorAll("[" + atributo + "]");
+      for(var i=0;i<opcoes.length;i++){
+        var igual = Number(opcoes[i].getAttribute(atributo)) === valor;
+        opcoes[i].className = opcoes[i].className.replace(/\s*is-on/g,"") + (igual ? " is-on" : "");
+      }
+    };
+    marcar(byId("tpHoras"), "data-hora-opt", tpHora);
+    marcar(byId("tpMinutos"), "data-minuto-opt", tpMinuto);
+
+    var rapidos = byId("tpRapidos");
+    if(rapidos){
+      var botoes = rapidos.querySelectorAll("[data-rapido]");
+      for(var r=0;r<botoes.length;r++){
+        var ehAtual = botoes[r].getAttribute("data-rapido") === atual;
+        botoes[r].className = "tp-rapido" + (ehAtual ? " is-on" : "");
+      }
+    }
+  }
+
+  function tpCentralizar(container, seletor){
+    if(!container){ return; }
+    var ativo = container.querySelector(seletor);
+    if(!ativo){ return; }
+    container.scrollTop = Math.max(0, ativo.offsetTop - (container.clientHeight / 2) + (ativo.offsetHeight / 2));
+  }
+
+  function tpMontar(){
+    var horas = byId("tpHoras");
+    var minutos = byId("tpMinutos");
+    var rapidos = byId("tpRapidos");
+    if(!horas || !minutos || horas.innerHTML){ return; }
+
+    var html = "";
+    for(var h=0; h<24; h++){
+      html += '<button type="button" class="tp-opt" data-hora-opt="' + h + '">' + pad2(h) + '</button>';
+    }
+    horas.innerHTML = html;
+
+    html = "";
+    for(var m=0; m<60; m+=5){
+      html += '<button type="button" class="tp-opt" data-minuto-opt="' + m + '">' + pad2(m) + '</button>';
+    }
+    minutos.innerHTML = html;
+
+    if(rapidos){
+      html = "";
+      for(var i=0;i<TP_RAPIDOS.length;i++){
+        html += '<button type="button" class="tp-rapido" data-rapido="' + TP_RAPIDOS[i] + '">' + TP_RAPIDOS[i] + '</button>';
+      }
+      rapidos.innerHTML = html;
+
+      var atalhos = rapidos.querySelectorAll("[data-rapido]");
+      for(var a=0;a<atalhos.length;a++){
+        atalhos[a].onclick = function(){
+          var lido = tpLerValor(this.getAttribute("data-rapido"));
+          tpHora = lido[0];
+          tpMinuto = lido[1];
+          tpAtualizarVisor();
+          tpConfirmarHorario();
+        };
+      }
+    }
+
+    var opcoesHora = horas.querySelectorAll("[data-hora-opt]");
+    for(var oh=0;oh<opcoesHora.length;oh++){
+      opcoesHora[oh].onclick = function(){
+        tpHora = Number(this.getAttribute("data-hora-opt"));
+        tpAtualizarVisor();
+      };
+    }
+
+    var opcoesMinuto = minutos.querySelectorAll("[data-minuto-opt]");
+    for(var om=0;om<opcoesMinuto.length;om++){
+      opcoesMinuto[om].onclick = function(){
+        tpMinuto = Number(this.getAttribute("data-minuto-opt"));
+        tpAtualizarVisor();
+      };
+    }
+  }
+
+  function abrirSeletorHora(valorAtual, aoConfirmar){
+    tpMontar();
+    var lido = tpLerValor(valorAtual);
+    tpHora = lido[0];
+    tpMinuto = lido[1];
+    tpAoConfirmar = aoConfirmar;
+    tpAtualizarVisor();
+
+    var folha = byId("folhaHorario");
+    if(folha){ folha.hidden = false; }
+
+    tpCentralizar(byId("tpHoras"), ".is-on");
+    tpCentralizar(byId("tpMinutos"), ".is-on");
+  }
+
+  function fecharSeletorHora(){
+    var folha = byId("folhaHorario");
+    if(folha){ folha.hidden = true; }
+    tpAoConfirmar = null;
+  }
+
+  function tpConfirmarHorario(){
+    var escolhido = tpFormatar(tpHora, tpMinuto);
+    var acao = tpAoConfirmar;
+    fecharSeletorHora();
+    if(acao){ acao(escolhido); }
+  }
+
+  function ligarCampoHorario(campo, aoEscolher){
+    if(!campo){ return; }
+    campo.onclick = function(){
+      var alvo = this;
+      abrirSeletorHora(alvo.value, function(valor){
+        alvo.value = valor;
+        if(aoEscolher){ aoEscolher(valor); }
+      });
+    };
+    campo.onkeydown = function(evento){
+      if(evento && (evento.key === "Enter" || evento.key === " ")){
+        evento.preventDefault();
+        this.click();
+      }
+    };
+  }
+
+  /* =======================================================
      INSTALAÇÃO NA TELA INICIAL (PWA)
      ======================================================= */
 
@@ -2941,6 +3306,16 @@ function recalcular(){
     addButton("btnSalvarAgenda", salvarAtendimento);
     addButton("btnIcs", gerarIcs);
     addButton("btnNovoAtendimento", novoAtendimento);
+
+    ligarCampoHorario(byId("agHoraPadrao"), function(){ recalcular(); });
+    addButton("tpCancelar", fecharSeletorHora);
+    addButton("tpConfirmar", tpConfirmarHorario);
+    var folhaHora = byId("folhaHorario");
+    if(folhaHora){
+      folhaHora.onclick = function(evento){
+        if(evento.target === folhaHora){ fecharSeletorHora(); }
+      };
+    }
 
     addButton("btnInstalar", instalar);
     addButton("btnFecharInstalar", fecharFolhaInstalar);
