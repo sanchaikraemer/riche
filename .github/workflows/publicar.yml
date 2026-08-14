@@ -1,0 +1,50 @@
+name: Publicar site
+
+# Publica o sistema no GitHub Pages a cada mudança na main.
+# A primeira execução também liga o Pages sozinha (enablement: true),
+# sem precisar mexer nas configurações do repositório.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publicacao.outputs.page_url }}
+    steps:
+      - name: Baixar os arquivos
+        uses: actions/checkout@v4
+
+      - name: Preparar o GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Montar o site
+        run: |
+          mkdir -p _site
+          cp index.html manifest.webmanifest sw.js _site/
+          cp -r icons _site/
+          ls -R _site
+
+      - name: Enviar os arquivos
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Publicar
+        id: publicacao
+        uses: actions/deploy-pages@v4
