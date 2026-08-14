@@ -6,14 +6,14 @@ usado no celular (Safari do iPhone e Android) e instalável na tela inicial.
 ## Versão — OBRIGATÓRIO em toda alteração
 
 **Toda mudança que vá para a `main` incrementa o número da versão em 1.**
-A versão atual é a **v.31**. A próxima é v.32, depois v.33, e assim por diante.
+A versão atual é a **v.32**. A próxima é v.33, depois v.34, e assim por diante.
 
 Dois lugares mudam juntos, sempre com o mesmo número:
 
 | Onde | Linha | Formato |
 |---|---|---|
-| `index.html` | `<div class="version-tag">` | `v.31` |
-| `sw.js` | `var VERSAO = ` | `"riche-v31"` |
+| `index.html` | `<div class="version-tag">` | `v.32` |
+| `sw.js` | `var VERSAO = ` | `"riche-v32"` |
 
 O número em `sw.js` troca o nome do cache do navegador. Sem trocá-lo, quem já
 abriu o sistema pode continuar vendo a versão antiga. Nunca atualize um sem o
@@ -46,6 +46,12 @@ dentro de `index.html` — inclusive as logos, embutidas em base64.
   conferido antes de subir.
 - **Nada de campo nativo de horário.** O relógio do sistema é ruim de usar;
   use o seletor próprio (`abrirSeletorHora` / `ligarCampoHorario`).
+- **Os dados são locais primeiro e sincronizam depois.** Tudo grava no
+  aparelho (funciona sem internet) e sobe para o Supabase quando há conta
+  ligada. Um aparelho só empurra o que ele mesmo mexeu (`richeSujos.v1`);
+  apagar deixa uma lápide (`richeExcluidos.v1`) para o apagamento chegar
+  aos outros aparelhos. Reenviar o que veio da nuvem ressuscita registros
+  apagados — foi o defeito que motivou a lista de sujos.
 - **Os dados ficam no aparelho** (`localStorage`). Mudar o nome de uma chave
   apaga os dados das pacientes — só faça isso com migração:
   `richeEstado.v003`, `richeAgenda.v003`, `richeClientes.v1`,
