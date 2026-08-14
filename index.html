@@ -4,7 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Richélen Flach">
+<meta name="application-name" content="Richélen Flach">
+<meta name="theme-color" content="#3b000d">
 <meta name="format-detection" content="telephone=no">
+<meta name="description" content="Orçamento estético premium e agendamento de pacientes.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icone-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icons/icone-512.png">
 <title>Orçamento Estético Premium — Richélen Flach</title>
 <style>
 :root{
@@ -1026,6 +1036,113 @@ input[type="time"]{
   border:1px solid rgba(255,232,210,.25);
 }
 
+/* ============ INSTALAÇÃO (PWA) ============ */
+@media (display-mode: standalone){
+  body{
+    padding-top:calc(16px + env(safe-area-inset-top, 0px));
+    padding-bottom:calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+}
+@media (display-mode: standalone) and (max-width:720px){
+  body{
+    padding-top:calc(10px + env(safe-area-inset-top, 0px));
+    padding-bottom:calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+.install-btn{
+  width:100%;
+  margin:10px 0 0;
+  min-height:46px;
+  font-size:11px;
+  background:#4a0715;
+  color:#ffe5ce;
+  border:1px solid var(--ouro);
+}
+.install-btn[hidden]{display:none}
+
+.sheet{
+  position:fixed;
+  inset:0;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(24,0,6,.62);
+  -webkit-backdrop-filter:blur(3px);
+  backdrop-filter:blur(3px);
+}
+.sheet[hidden]{display:none}
+.sheet-card{
+  width:100%;
+  max-width:420px;
+  max-height:86vh;
+  overflow:auto;
+  background:linear-gradient(180deg,#5a0618,#2b0008);
+  border:1px solid var(--ouro);
+  border-radius:22px;
+  padding:22px;
+  color:#ffe5ce;
+  box-shadow:0 26px 60px rgba(20,0,6,.5);
+  -webkit-overflow-scrolling:touch;
+}
+.sheet-card h4{
+  margin:0 0 4px;
+  color:#ffd8b8;
+  text-transform:uppercase;
+  letter-spacing:.20em;
+  font-size:11px;
+}
+.sheet-card p{
+  margin:0 0 14px;
+  color:#f0cbbb;
+  font-size:12.5px;
+  line-height:1.5;
+}
+.sheet-steps{
+  margin:0 0 16px;
+  padding:0;
+  list-style:none;
+  counter-reset:passo;
+}
+.sheet-steps li{
+  counter-increment:passo;
+  position:relative;
+  padding:0 0 0 34px;
+  margin-bottom:12px;
+  font-size:13px;
+  line-height:1.45;
+}
+.sheet-steps li::before{
+  content:counter(passo);
+  position:absolute;
+  left:0;
+  top:-1px;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:linear-gradient(180deg,#ffd7ae,#c78d5c);
+  color:#33000b;
+  font-weight:800;
+  font-size:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.sheet-icon{
+  display:inline-block;
+  vertical-align:-3px;
+  margin:0 2px;
+}
+.sheet-note{
+  border-top:1px solid rgba(255,232,210,.18);
+  padding-top:12px;
+  color:#f2d6c4;
+  font-size:11.5px;
+  line-height:1.45;
+}
+
 /* Agenda no documento impresso */
 .agenda-section{margin-bottom:12px}
 .agenda-table{
@@ -1065,6 +1182,8 @@ input[type="time"]{
   .actions-3{grid-template-columns:1fr 1fr}
 }
 @media print{
+  .install-btn,
+  .sheet{display:none!important}
   .agenda-section{margin-bottom:3mm!important}
   .agenda-head{padding:2mm 3mm!important;font-size:6.4pt!important}
   .agenda-row{padding:1.8mm 3mm!important;font-size:7.2pt!important}
@@ -1082,6 +1201,8 @@ input[type="time"]{
       <button id="tabBtnOrcamento" class="tab-btn is-active" type="button">Orçamento</button>
       <button id="tabBtnAgenda" class="tab-btn" type="button">Agendamento</button>
     </div>
+
+    <button id="btnInstalar" class="install-btn" type="button" hidden>Instalar na tela inicial</button>
 
     <div class="tab-pane" id="tabOrcamento">
 
@@ -1416,6 +1537,19 @@ input[type="time"]{
       </footer>
     </section>
   </main>
+</div>
+
+<div class="sheet" id="folhaInstalar" hidden>
+  <div class="sheet-card">
+    <h4>Instalar na tela inicial</h4>
+    <p id="instalarIntro">Deixe o orçamento e a agenda a um toque, abrindo em tela cheia e funcionando mesmo sem internet.</p>
+
+    <ol class="sheet-steps" id="instalarPassos"></ol>
+
+    <div class="sheet-note" id="instalarNota"></div>
+
+    <button id="btnFecharInstalar" class="btn-primary" type="button" style="margin-top:16px;width:100%;">Entendi</button>
+  </div>
 </div>
 
 <script>
@@ -2595,6 +2729,149 @@ function recalcular(){
     atendimentoId = estado.atendimentoId || null;
   }
 
+  /* =======================================================
+     INSTALAÇÃO NA TELA INICIAL (PWA)
+     ======================================================= */
+
+  var promptInstalacao = null;
+
+  function estaInstalado(){
+    if(navigator.standalone === true){ return true; }
+    try{
+      return window.matchMedia("(display-mode: standalone)").matches ||
+             window.matchMedia("(display-mode: fullscreen)").matches ||
+             window.matchMedia("(display-mode: minimal-ui)").matches;
+    }catch(e){
+      return false;
+    }
+  }
+
+  function ehIos(){
+    var ua = navigator.userAgent || "";
+    if(/iPhone|iPad|iPod/i.test(ua)){ return true; }
+    return navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
+  }
+
+  function ehNavegadorEmbutido(){
+    var ua = navigator.userAgent || "";
+    if(/FBAN|FBAV|Instagram|Line\/|MicroMessenger|Twitter|LinkedInApp/i.test(ua)){ return true; }
+    if(ehIos() && /CriOS|FxiOS|EdgiOS|OPiOS/i.test(ua)){ return false; }
+    return false;
+  }
+
+  function podeInstalar(){
+    if(estaInstalado()){ return false; }
+    return !!promptInstalacao || ehIos();
+  }
+
+  function atualizarBotaoInstalar(){
+    var botao = byId("btnInstalar");
+    if(!botao){ return; }
+    botao.hidden = !podeInstalar();
+  }
+
+  function montarFolhaInstalar(){
+    var passos = byId("instalarPassos");
+    var nota = byId("instalarNota");
+    var intro = byId("instalarIntro");
+    if(!passos || !nota){ return; }
+
+    var itens = [];
+
+    if(ehNavegadorEmbutido()){
+      if(intro){
+        intro.textContent = "Este link foi aberto dentro de outro aplicativo, e daqui o iPhone não deixa instalar.";
+      }
+      itens = [
+        'Toque nos três pontinhos <span class="sheet-icon">•••</span> ou em “Abrir no navegador”.',
+        "Escolha abrir a página no <b>Safari</b>.",
+        "Já no Safari, toque em <b>Instalar na tela inicial</b> outra vez."
+      ];
+      nota.innerHTML = "A instalação só funciona pelo Safari — dentro do Instagram ou do WhatsApp a opção não aparece.";
+    }else if(ehIos()){
+      if(intro){
+        intro.textContent = "Deixe o orçamento e a agenda a um toque, abrindo em tela cheia e funcionando mesmo sem internet.";
+      }
+      itens = [
+        'Toque no botão <b>Compartilhar</b> <span class="sheet-icon">⬆️</span> na barra do Safari (embaixo, no meio).',
+        "Deslize a lista para baixo e toque em <b>Adicionar à Tela de Início</b>.",
+        "Toque em <b>Adicionar</b>, no canto superior direito."
+      ];
+      nota.innerHTML = "Pronto: o ícone aparece na tela inicial do iPhone. O app abre sem a barra do navegador e continua funcionando sem sinal — seus orçamentos e a agenda ficam salvos no aparelho.";
+    }else{
+      if(intro){
+        intro.textContent = "Instale o app para abrir direto, em tela cheia, sem depender do navegador.";
+      }
+      itens = [
+        "Abra o menu do navegador (⋮ ou ⋯).",
+        "Escolha <b>Instalar aplicativo</b> ou <b>Adicionar à tela inicial</b>.",
+        "Confirme em <b>Instalar</b>."
+      ];
+      nota.innerHTML = "O app continua funcionando sem internet e guarda os dados no próprio aparelho.";
+    }
+
+    var html = "";
+    for(var i=0;i<itens.length;i++){
+      html += "<li>" + itens[i] + "</li>";
+    }
+    passos.innerHTML = html;
+  }
+
+  function abrirFolhaInstalar(){
+    montarFolhaInstalar();
+    var folha = byId("folhaInstalar");
+    if(folha){ folha.hidden = false; }
+  }
+
+  function fecharFolhaInstalar(){
+    var folha = byId("folhaInstalar");
+    if(folha){ folha.hidden = true; }
+  }
+
+  function instalar(){
+    if(promptInstalacao){
+      promptInstalacao.prompt();
+      var guardado = promptInstalacao;
+      promptInstalacao = null;
+      if(guardado.userChoice && guardado.userChoice.then){
+        guardado.userChoice.then(function(escolha){
+          if(escolha && escolha.outcome === "accepted"){
+            status("App instalado.");
+          }else{
+            status("Instalação cancelada.");
+          }
+          atualizarBotaoInstalar();
+        });
+      }
+      return;
+    }
+    abrirFolhaInstalar();
+  }
+
+  function registrarServiceWorker(){
+    if(!("serviceWorker" in navigator)){ return; }
+    var protocolo = window.location.protocol;
+    var host = window.location.hostname;
+    var seguro = protocolo === "https:" || host === "localhost" || host === "127.0.0.1";
+    if(!seguro){ return; }
+    try{
+      navigator.serviceWorker.register("./sw.js")["catch"](function(){});
+    }catch(e){}
+  }
+
+  window.addEventListener("beforeinstallprompt", function(evento){
+    evento.preventDefault();
+    promptInstalacao = evento;
+    atualizarBotaoInstalar();
+  });
+
+  window.addEventListener("appinstalled", function(){
+    promptInstalacao = null;
+    fecharFolhaInstalar();
+    atualizarBotaoInstalar();
+    status("App instalado — abra pelo ícone na tela inicial.");
+  });
+
   function addButton(id, fn){
     var node = byId(id);
     if(!node){ return; }
@@ -2664,6 +2941,17 @@ function recalcular(){
     addButton("btnSalvarAgenda", salvarAtendimento);
     addButton("btnIcs", gerarIcs);
     addButton("btnNovoAtendimento", novoAtendimento);
+
+    addButton("btnInstalar", instalar);
+    addButton("btnFecharInstalar", fecharFolhaInstalar);
+    var folha = byId("folhaInstalar");
+    if(folha){
+      folha.onclick = function(evento){
+        if(evento.target === folha){ fecharFolhaInstalar(); }
+      };
+    }
+    atualizarBotaoInstalar();
+    registrarServiceWorker();
 
     renderCalendarioSemana();
     renderCalendario();
