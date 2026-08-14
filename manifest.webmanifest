@@ -1,0 +1,40 @@
+{
+  "name": "Richélen Flach — Orçamento & Agenda",
+  "short_name": "Richélen Flach",
+  "description": "Orçamento estético premium e agendamento de pacientes.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ead8cc",
+  "theme_color": "#3b000d",
+  "categories": ["business", "productivity", "medical"],
+  "icons": [
+    {
+      "src": "./icons/icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icone-192-mascara.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icons/icone-512-mascara.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
