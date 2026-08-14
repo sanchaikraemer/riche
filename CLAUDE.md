@@ -6,14 +6,14 @@ usado no celular (Safari do iPhone e Android) e instalável na tela inicial.
 ## Versão — OBRIGATÓRIO em toda alteração
 
 **Toda mudança que vá para a `main` incrementa o número da versão em 1.**
-A versão atual é a **v.30**. A próxima é v.31, depois v.32, e assim por diante.
+A versão atual é a **v.31**. A próxima é v.32, depois v.33, e assim por diante.
 
 Dois lugares mudam juntos, sempre com o mesmo número:
 
 | Onde | Linha | Formato |
 |---|---|---|
-| `index.html` | `<div class="version-tag">` | `v.30` |
-| `sw.js` | `var VERSAO = ` | `"riche-v30"` |
+| `index.html` | `<div class="version-tag">` | `v.31` |
+| `sw.js` | `var VERSAO = ` | `"riche-v31"` |
 
 O número em `sw.js` troca o nome do cache do navegador. Sem trocá-lo, quem já
 abriu o sistema pode continuar vendo a versão antiga. Nunca atualize um sem o
@@ -46,9 +46,16 @@ dentro de `index.html` — inclusive as logos, embutidas em base64.
   conferido antes de subir.
 - **Nada de campo nativo de horário.** O relógio do sistema é ruim de usar;
   use o seletor próprio (`abrirSeletorHora` / `ligarCampoHorario`).
-- **Os dados ficam no aparelho** (`localStorage`), nas chaves `richeEstado.v003`
-  e `richeAgenda.v003`. Mudar esses nomes apaga a agenda das pacientes —
-  só faça isso com migração.
+- **Os dados ficam no aparelho** (`localStorage`). Mudar o nome de uma chave
+  apaga os dados das pacientes — só faça isso com migração:
+  `richeEstado.v003`, `richeAgenda.v003`, `richeClientes.v1`,
+  `richeProdutos.v1`, `richeAplicacoes.v1`, `richeFinanceiro.v1`,
+  `richeRecibos.v1`, `richeSecao.v1`.
+- **O menu não pode alargar a página.** As seções vivem em `.tab-pane` e o
+  menu rola na horizontal; qualquer faixa rolável precisa de `min-width:0` e
+  `max-width:100%`, senão o celular expande o layout e desmonta tudo.
+- **NFS-e não é emitida aqui.** O módulo Recibos gera recibo e guarda os dados;
+  a nota fiscal em si exige certificado digital e o sistema da prefeitura.
 
 ## Publicação
 
