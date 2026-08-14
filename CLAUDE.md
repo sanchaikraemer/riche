@@ -6,14 +6,14 @@ usado no celular (Safari do iPhone e Android) e instalável na tela inicial.
 ## Versão — OBRIGATÓRIO em toda alteração
 
 **Toda mudança que vá para a `main` incrementa o número da versão em 1.**
-A versão atual é a **v.33**. A próxima é v.34, depois v.35, e assim por diante.
+A versão atual é a **v.34**. A próxima é v.35, depois v.36, e assim por diante.
 
 Dois lugares mudam juntos, sempre com o mesmo número:
 
 | Onde | Linha | Formato |
 |---|---|---|
-| `index.html` | `<div class="version-tag">` | `v.33` |
-| `sw.js` | `var VERSAO = ` | `"riche-v33"` |
+| `index.html` | `<div class="version-tag">` | `v.34` |
+| `sw.js` | `var VERSAO = ` | `"riche-v34"` |
 
 O número em `sw.js` troca o nome do cache do navegador. Sem trocá-lo, quem já
 abriu o sistema pode continuar vendo a versão antiga. Nunca atualize um sem o
