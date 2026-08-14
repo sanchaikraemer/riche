@@ -4,7 +4,7 @@
      chega assim que ela abre o app com internet, e o app continua abrindo sem sinal.
    - demais arquivos do próprio site: cache primeiro, atualizando em segundo plano. */
 
-var VERSAO = "riche-v003";
+var VERSAO = "riche-v30";
 var ESSENCIAIS = [
   "./",
   "./index.html",
